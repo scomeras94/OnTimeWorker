@@ -7,6 +7,7 @@ namespace OnTimerWorker.Library.FrontServices
 {
     public class PaginattionService
     {
+        // Comuns
         public bool IsPaginattionNeeded(int maxPagItems, List<Register> registers = null, List<RegisterData> dataRegisters = null)
         {
             if (maxPagItems <= 0)

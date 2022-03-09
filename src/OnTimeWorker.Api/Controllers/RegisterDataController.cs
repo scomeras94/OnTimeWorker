@@ -17,19 +17,16 @@ namespace Oteocs_business_management_API.Controllers
         {
             return _registerDataService.Get();
         }
-
         [HttpPost("insert")]
         public bool Insert(RegisterData registerData)
         {
             return _registerDataService.Insert(registerData);
         }
-
         [HttpPost("update")]
         public bool Update(RegisterData registerData)
         {
             return _registerDataService.Update(registerData);
         }
-
         [HttpPost("delete")]
         public bool Delete(RegisterData registerData)
         {

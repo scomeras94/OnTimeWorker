@@ -30,7 +30,7 @@ namespace OnTimerWorker.Library.BackServices
                 if (!_validator.ValidateInsert(worker))
                     return false;
 
-                worker.registrationDate = DateFormater.FormatDateTimeForMySQL();
+                worker.registrationDate = DateFormater.GetDateNowInSqlFormat();
                 return _workerRepository.Insert(worker);
             }
             catch (Exception)

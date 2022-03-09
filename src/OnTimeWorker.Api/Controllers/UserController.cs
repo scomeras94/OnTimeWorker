@@ -16,19 +16,16 @@ namespace Oteocs_business_management_API.Controllers
         {
             return _userService.Get();
         }
-
         [HttpPost("insert")]
         public bool Insert(User user)
         {
             return _userService.Insert(user);
         }
-
         [HttpPost("update")]
         public bool Update(User user)
         {
             return _userService.Update(user);
         }
-
         [HttpPost("delete")]
         public bool Delete(User user)
         {
