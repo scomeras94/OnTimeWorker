@@ -1,0 +1,52 @@
+﻿@model OnTimeWorker.Core.Models.ViewModels.WorkerViewModel
+@{
+    ViewData["Title"] = "Index";
+    Model.worker.user.pwd = "";
+}
+
+<link href="~/css/main.css" rel="stylesheet" type="text/css" />
+
+<div class="text-center">
+
+    @if (Model.errors != null && Model.errors.Count > 0) {
+        <div>
+            @{
+                foreach (var i in Model.errors)
+                {
+                    <p style="background-color: lightcoral; width: 100%; text-align: left; padding-left: 10px; font-weight: 500;">
+                        @i.code -> @i.program -> @i.text -> @i.message
+                    </p>
+                }
+
+                { Model.errors = new List<OnTimeWorker.Core.Models.Control.Error>(); }
+            }
+        </div>
+    }
+
+    <div>
+        <h4 class="text-info" style="float:left;">Modificando datos usuario</h4>
+        <br />
+
+        @using (Html.BeginForm("updatePwd", "worker", FormMethod.Post, Model.worker))
+        {
+            @Html.TextBoxFor(m => m.worker.user.id, new { @Value = Model.worker.user.id, @class = "form-control", @style = "float:left;", @hidden = "true" })
+            <div>&nbsp;</div>
+
+            <div style="text-align: left;">User</div>
+            @Html.TextBoxFor(m => m.worker.user.name, new
+            {
+                @Value = Model.worker.user.name,
+                @class = "form-control",
+                @style = "float:left;",
+                @readOnly = "true"
+            })
+
+            <div style="text-align: left;">Contraseña</div>
+            @Html.TextBoxFor(m => m.worker.user.pwd, new { @Value = "", @class = "form-control", @style = "float:left;" })
+
+            <div>&nbsp;</div>
+            <input style="float:right;" type="submit" value="Modificar" class="btn btn-primary" />
+        }
+    </div>
+
+</div>

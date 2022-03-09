@@ -1,0 +1,100 @@
+﻿@model OnTimeWorker.Core.Models.ViewModels.WorkerViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link href="~/css/main.css" rel="stylesheet" type="text/css" />
+
+<div class="text-center">
+
+    @if (Model.errors != null && Model.errors.Count > 0)
+    {
+        <div>
+            @{
+                foreach (var i in Model.errors)
+                {
+                    <p style="background-color: lightcoral; width: 100%; text-align: left; padding-left: 10px; font-weight: 500;">
+                        @i.code -> @i.program -> @i.text -> @i.message
+                    </p>
+                }
+
+                { Model.errors = new List<OnTimeWorker.Core.Models.Control.Error>(); }
+            }
+        </div>
+    }
+
+    @if (Model.success != null && Model.success.Count > 0)
+    {
+        <div>
+            @{
+                foreach (var i in Model.success)
+                {
+                    <p style="background-color: lightgreen; width: 100%; text-align: left; padding-left: 10px; font-weight: 500;">
+                        @i.tittle: @i.message
+                    </p>
+                }
+
+                { Model.success = new List<OnTimeWorker.Core.Models.Control.Success>(); }
+            }
+        </div>
+    }
+
+    <div>
+        <h4 class="text-info" style="float:left;">Datos empleado</h4>
+        <table class="table">
+            <tr>
+                <th>Documento de identidad </th>
+                <td>@Model.worker.identityDocument</td>
+            </tr>
+            <tr>
+                <th>Nombre </th>
+                <td>@Model.worker.name</td>
+            </tr>
+            <tr>
+                <th>Apellidos </th>
+                <td>@Model.worker.secondName</td>
+            </tr>
+            <tr>
+                <th>Telefono </th>
+                <td>@Model.worker.phone</td>
+            </tr>
+            <tr>
+                <th>Email </th>
+                <td>@Model.worker.email</td>
+            </tr>
+            <tr>
+                <th>Fecha de registro </th>
+                <td>@Model.worker.registrationDate</td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <input style="float:right; padding-top:10px;" type="submit" value="Modificar datos" class="btn btn-primary"
+                           onclick="location.href='@Url.Action("EditForm", "Worker", Model.worker)'" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <h4 class="text-info" style="float:left;">Datos usuario</h4>
+        <table class="table">
+            <tr>
+                <th>Usuario </th>
+                <td>@Model.worker.user.name</td>
+            </tr>
+            <tr>
+                <th>Fecha de registro </th>
+                <td>@Model.worker.user.registrationDate</td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <input style="float:right; padding-top:10px;" type="submit" value="Modificar contraseña" class="btn btn-primary"
+                           onclick="location.href='@Url.Action("PwdForm", "Worker", Model.worker)'" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>

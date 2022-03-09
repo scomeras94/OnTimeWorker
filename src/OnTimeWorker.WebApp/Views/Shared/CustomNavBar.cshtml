@@ -1,0 +1,39 @@
+﻿@model OnTimeWorker.Core.Models.Worker
+@{
+    ViewData["Title"] = "CustomNavBar";
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+
+        <a class="navbar-brand" asp-area="" asp-controller="Login" asp-action="Index"><img src="~/img/logo-1-2.png" style="width:124px; height:55px;" /></a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item" style="padding-left:5px;">
+                    <input type="button" value="Diario" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Current", Model)'" />
+                </li>
+                <li class="nav-item" style="padding-left:5px;">
+                    <input type="button" value="Fichajes" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Register", Model)'" />
+                </li>
+                <li class="nav-item" style="padding-left:5px;">
+                    <input type="button" value="Trabajador" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Worker", Model)'" />
+                </li>
+
+                @if (Model != null && Model.user != null && Model.user.isAdmin)
+                {
+                    <li class="nav-item" style="padding-left:5px;">
+                        <input type="button" value="Trabajador" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "Worker", Model)'" />
+                    </li>
+                }
+            </ul>
+        </div>
+
+    </div>
+</nav>
+

@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+/src/OnTimeWorker.Api/bin/Debug/netcoreapp3.1
+/src/OnTimeWorker.Api/obj
+/src/OnTimeWorker.Core/bin/Debug/netcoreapp3.1
+/src/OnTimeWorker.Core/obj
+/src/OnTimeWorker.Infra/bin/Debug/netcoreapp3.1
+/src/OnTimeWorker.Infra/obj
+/src/OnTimeWorker.Library/bin/Debug/netcoreapp3.1
+/src/OnTimeWorker.Library/obj
+/src/OnTimeWorker.WebApp/bin/Debug/netcoreapp3.1
+/src/OnTimeWorker.WebApp/obj
+/src/.vs/OnTimeWorker

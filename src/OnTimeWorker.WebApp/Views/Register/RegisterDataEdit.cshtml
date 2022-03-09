@@ -1,0 +1,69 @@
+﻿@model OnTimeWorker.Core.Models.ViewModels.RegisterDataEditViewModel
+@{
+    ViewData["Title"] = "RegisterDataEdit";
+}
+
+<link href="~/css/main.css" rel="stylesheet" type="text/css" />
+
+<div class="text-center">
+
+    @if (Model.errors != null && Model.errors.Count > 0)
+    {
+        <div>
+            @{
+                foreach (var i in Model.errors)
+                {
+                    <p style="background-color: lightcoral; width: 100%; text-align: left; padding-left: 10px; font-weight: 500;">
+                        @i.code -> @i.program -> @i.text -> @i.message
+                    </p>
+                }
+
+                { Model.errors = new List<OnTimeWorker.Core.Models.Control.Error>(); }
+            }
+        </div>
+    }
+
+    <div>
+        <h4 class="text-info" style="float:left;">Modificando fichaje</h4>
+        <br />
+
+        @using (Html.BeginForm("edit", "register", FormMethod.Post, Model.registerData))
+        {
+            @Html.TextBoxFor(m => m.registerData.id, new { @Value = Model.registerData.id, @class = "form-control", @style = "float:left;", @hidden = "true" })
+            <div>&nbsp;</div>
+
+            <div style="text-align:left;">Fecha</div>
+            @Html.TextBoxFor(m => m.registerData.date, new
+            {
+                @Value = Model.registerData.date,
+                @class = "form-control",
+                @style = "float:left;",
+                @readOnly = "true"
+            })
+
+            @if (Model.registerData.edited)
+            {
+                <div style="text-align: left;">Inicio</div>
+                @Html.TextBoxFor(m => m.registerData.time_start_modified, new { @class = "form-control", @style = "float:left;" })
+
+                <div style="text-align: left;">Parada</div>
+                @Html.TextBoxFor(m => m.registerData.time_stop_modified, new { @class = "form-control", @style = "float:left;" })
+            }
+            else
+            {
+                <div style="text-align: left;">Inicio</div>
+                @Html.TextBoxFor(m => m.registerData.time_start, new { @class = "form-control", @style = "float:left;" })
+
+                <div style="text-align: left;">Parada</div>
+                @Html.TextBoxFor(m => m.registerData.time_stop, new { @class = "form-control", @style = "float:left;" })
+            }
+
+            <div style="text-align: left;">Comentarios</div>
+            @Html.TextAreaFor(m => m.registerData.comments, new { @class = "form-control", @style = "float:left;" })
+
+            <div>&nbsp;</div>
+            <input style="float:right;" type="submit" value="Modificar" class="btn btn-primary" />
+        }
+    </div>
+
+</div>

@@ -1,0 +1,63 @@
+﻿@model OnTimeWorker.Core.Models.ViewModels.WorkerViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link href="~/css/main.css" rel="stylesheet" type="text/css" />
+
+<div class="text-center">
+
+    @if (Model.errors != null && Model.errors.Count > 0)
+    {
+        <div>
+            @{
+                foreach (var i in Model.errors)
+                {
+                    <p style="background-color: lightcoral; width: 100%; text-align: left; padding-left: 10px; font-weight: 500;">
+                        @i.code -> @i.program -> @i.text -> @i.message
+                    </p>
+                }
+
+                { Model.errors = new List<OnTimeWorker.Core.Models.Control.Error>(); }
+            }
+        </div>
+    }
+
+<div>
+    <h4 class="text-info" style="float:left;">Modificando datos empleado</h4>
+    <br />
+
+    @using (Html.BeginForm("updateWorker", "worker", FormMethod.Post, Model.worker))
+    {
+        @Html.TextBoxFor(m => m.worker.id, new { @Value = Model.worker.id, @class = "form-control", @style = "float:left;", @hidden = "true" })
+        <div>&nbsp;</div>
+
+        <div style="text-align: left;">Documento de identidad</div>
+        @Html.TextBoxFor(m => m.worker.identityDocument, new
+        {
+            @Value = Model.worker.identityDocument,
+            @class = "form-control",
+            @style = "float:left;",
+            @readOnly = "true"
+        })
+
+        <div style="text-align: left;">Nombre</div>
+        @Html.TextBoxFor(m => m.worker.name, new { @Value = Model.worker.name, @class = "form-control", @style = "float:left;" })
+
+        <div style="text-align: left;">Apellidos</div>
+        @Html.TextBoxFor(m => m.worker.secondName, new { @Value = Model.worker.secondName, @class = "form-control", @style = "float:left;" })
+
+        <div style="text-align: left;">Teléfono</div>
+        @Html.TextBoxFor(m => m.worker.phone, new { @Value = Model.worker.phone, @class = "form-control", @style = "float:left;" })
+
+        <div style="text-align: left;">Email</div>
+        @Html.TextBoxFor(m => m.worker.email, new { @Value = Model.worker.email, @class = "form-control", @style = "float:left;" })
+
+        <div>&nbsp;</div>
+        <input style="float:right;" type="submit" value="Modificar" class="btn btn-primary" />
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+    }
+</div>
+
+</div>

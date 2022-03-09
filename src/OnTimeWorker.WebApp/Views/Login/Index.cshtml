@@ -1,0 +1,49 @@
+﻿@model OnTimeWorker.Core.Models.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login Page";
+}
+
+<div class="text-center" style="background-color:white">
+
+    @if (Model.errors != null && Model.errors.Count > 0) {
+        <div>
+            @{
+                foreach (var i in Model.errors)
+                {
+                    <p style="background-color: lightcoral; width: 100%; text-align: left; padding-left: 10px; font-weight: 500;">
+                        @i.code -> @i.program -> @i.text -> @i.message
+                    </p>
+                }
+
+                { Model.errors = new List<OnTimeWorker.Core.Models.Control.Error>(); }
+            }
+        </div>
+    }
+
+    <div>
+        <h4 class="text-info" style="float:left;">Acceso empleado</h4><br /><br />
+
+        <div>
+            @using (Html.BeginForm("Login", "Login", FormMethod.Post, Model.user)) {
+                <table>
+                    <tr>
+                        <td><strong>Usuario</strong></td>
+                        <td>@Html.TextBoxFor(m => m.user.name)</td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding-top: 10px; padding-right: 10px;"><strong>Contraseña</strong></td>
+                        <td style="padding-top: 10px;">@Html.PasswordFor(m => m.user.pwd, new { @Value = "18061980B" })</td>
+                    </tr>
+                </table>
+                <br />
+
+                <div style="width:40%;">
+                    <input type="button" value="Limpiar" class="btn btn-secondary" onclick="location.href='@Url.Action("Clean", "Login")'" />
+                    <input type="submit" value="Entrar" class="btn btn-primary" />
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

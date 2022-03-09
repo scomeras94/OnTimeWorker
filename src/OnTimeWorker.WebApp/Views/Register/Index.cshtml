@@ -1,0 +1,197 @@
+﻿@model OnTimeWorker.Core.Models.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Index";
+    var cont = 1;
+
+    var icon = "<svg xmlns = 'http://www.w3.org/2000/svg' width = '16' height = '16' fill = 'currentColor' class='bi bi-pencil-fill' viewBox='0 0 16 16'>";
+    icon = icon + "<path d = 'M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z' />";
+    icon = icon + "</svg >";
+
+    //
+    var monthIndex = 0;
+    var range = 0;
+
+    //
+    if (Model.monthSelected == null)
+    {
+        Model.monthSelected = new OnTimeWorker.Core.Models.Month("-1");
+    }
+}
+
+<script>
+    var jsSelectedMonth = 0;
+</script>
+
+<div class="text-center">
+
+    @if (Model.errors != null && Model.errors.Count > 0)
+    {
+        <div>
+            @{
+                foreach (var i in Model.errors)
+                {
+                    <p style="background-color: lightcoral; width: 100%; text-align: left; padding-left: 10px; font-weight: 500;">
+                        @i.code -> @i.program -> @i.text -> @i.message
+                    </p>
+                }
+
+                { Model.errors = new List<OnTimeWorker.Core.Models.Control.Error>(); }
+            }
+        </div>
+    }
+
+    @if (Model.success != null && Model.success.Count > 0)
+    {
+        <div>
+            @{
+                foreach (var i in Model.success)
+                {
+                    <p style="background-color: lightgreen; width: 100%; text-align: left; padding-left: 10px; font-weight: 500;">
+                        @i.tittle: @i.message
+                    </p>
+                }
+
+                { Model.success = new List<OnTimeWorker.Core.Models.Control.Success>(); }
+            }
+        </div>
+    }
+
+    @if (Model.yearsOfRegisters != null && Model.yearsOfRegisters.Count > 0)
+    {
+        <div style="width:100%;">
+            <h4 class="text-info" style="float:left;">Fichajes disponibles</h4><br /><br />
+
+            <select name="years" id="years" onchange="ChangeSelectedYear()" style="float: left;">
+                <option value=""></option>
+                @foreach (var i in Model.yearsOfRegisters)
+                {
+                    @if (Model.yearSelected != "-1" && Model.yearSelected == i)
+                    {
+                        <option value="@i" selected>
+                            @i
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@i">
+                            @i
+                        </option>
+                    }
+                }
+            </select>
+        </div>
+        <div style="float:left; width:100%;">&nbsp;</div>
+    }
+
+    @if (Model.monthsOfRegisters != null && Model.monthsOfRegisters.Count > 0)
+    {
+        <div style="float:left;">
+            <select name="months" id="months" onchange="ChangeSelectedMonth()" style="float: left;">
+                <option value=""></option>
+                @foreach (var i in Model.monthsOfRegisters)
+                {
+                    @if (Model.monthSelected.number != "-1" && Model.monthSelected.number == i.number)
+                    {
+                        <option value="@i.number" selected>
+                            @i.name
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@i.number">
+                            @i.name
+                        </option>
+                    }
+                }
+            </select>
+        </div>
+        <div style="float: left; width:100%;">&nbsp;</div>
+    }
+
+    @if (Model.monthSelected != null & Model.monthSelected.number != "-1")
+    {
+        <div style="float:left;">
+            <button type="button" class="btn btn-primary" style="float: left;"
+                    onclick="location.href='@Url.Action("GetRegistersFiltered", "Register", new { month = Model.monthSelected.number })'">
+                Mostrar
+            </button>
+        </div>
+        <div style="float: left; width:100%;">&nbsp;</div>
+    }
+
+    @if (Model.print) {
+        if (Model.pagDataRegisters != null && Model.pagDataRegisters.Count > 0) {
+            <div>
+                <h4 class="text-info" style="float:left;">Fichajes @Model.monthSelected.name - @Model.yearSelected</h4>
+                <table class="table">
+                    <tr>
+                        <th>Nº</th>
+                        <th>Fecha</th>
+                        <th>Inicio</th>
+                        <th>Parada</th>
+                        <th>Total</th>
+                        <th>Comentarios</th>
+                        <th>Editado</th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var r in Model.pagDataRegisters)
+                    {
+                        <tr>
+                            <td>@cont</td>
+                            <td>@r.date</td>
+                            @if (r.edited)
+                            {
+                                <td>@r.time_start_modified</td>
+                                <td>@r.time_stop_modified</td>
+                                <td>@r.total_time_modified</td>
+                            }
+                            else
+                            {
+                                <td>@r.time_start</td>
+                                <td>@r.time_stop</td>
+                                <td>@r.total_time</td>
+                            }
+                            @if (r.comments != null && r.comments.Length > 0)
+                            {
+                                <td><a href="javascript:ShowComment('@r.comments');">Sí</a></td>
+                            }
+                            else
+                            {
+                                <td>No</td>
+                            }
+                            @if (r.edited)
+                            {
+                                <td>Sí</td>
+                            }
+                            else
+                            {
+                                <td>No</td>
+                            }
+
+                            <td><a href="@Url.Action("RegisterDataEdit", "Register", new { indexOfDataRegister = Model.dataRegisters.IndexOf(r) })">@Html.Raw(icon)</a></td>
+
+                            @{
+                                cont += 1;
+                            }
+                        </tr>
+                    }
+                </table>
+                <div>
+                    @if (Model.paginar)
+                    {
+                        <div style="float:right;">
+                            <a href="@Url.Action("Paginar", "Register")">
+                                <img src="~/img/drop.png" style="width:20px; height:20px;" />
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <br />
+        }
+
+        Model.print = false;
+    }
+
+</div>

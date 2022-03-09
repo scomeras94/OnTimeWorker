@@ -1,0 +1,69 @@
+﻿@model OnTimeWorker.Core.Models.ViewModels.CurrentViewModel
+@{
+    ViewData["Title"] = "Index";
+
+    string imgRoute = "on-mio.png";
+    if (Model.worker.status.working)
+    {
+        imgRoute = "off-mio.png";
+    }
+}
+
+<link href="~/css/main.css" rel="stylesheet" type="text/css" />
+
+<div class="text-center">
+
+    <div style="width: 100%;">
+        <h4 class="text-info" style="float:left;">Entrar / Salir</h4><br /><br />
+        <a href="@Url.Action("Register", "Current")">
+            <img src="~/img/@imgRoute.ToString()" style="width: 150px; height: 130px; float:left;" />
+        </a>
+    </div>
+        
+    <div style="width: 100%; height:150px;"></div>
+
+    <div style="width:100%;">
+        <h4 class="text-info" style="float:left;">Entradas / salidas del día</h4>
+        <table class="table">
+            <tr>
+                <th>Hora</th>
+                <th>Tipo</th>
+                <th>Fecha</th>
+            </tr>
+
+            @if (Model.pagCurrentRegisters != null && Model.pagCurrentRegisters.Count > 0)
+            {
+                @foreach (var r in Model.pagCurrentRegisters)
+                {
+                    <tr>
+                        <td>@r.time</td>
+                        @if (r.stop)
+                        {
+                            <td>Salida</td>
+                        }
+                        else
+                        {
+                            <td>Entrada</td>
+                        }
+                        <td>@r.date</td>
+                    </tr>
+                }
+            }
+        </table>
+        <div>
+            @if (Model.paginar)
+            {
+                <div style="float:right;">
+                    <a href="@Url.Action("Paginar", "Current")">
+                        <img src="~/img/drop.png" style="width:20px; height:20px;" />
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <br />
+
+</div>
+
+
+
