@@ -61,6 +61,7 @@
         <div style="width:100%;">
             <h4 class="text-info" style="float:left;">Fichajes disponibles</h4><br /><br />
 
+            <h6 class="text-dark" style="float:left;">Año&nbsp;</h6>
             <select name="years" id="years" onchange="ChangeSelectedYear()" style="float: left;">
                 <option value=""></option>
                 @foreach (var i in Model.yearsOfRegisters)
@@ -86,6 +87,7 @@
     @if (Model.monthsOfRegisters != null && Model.monthsOfRegisters.Count > 0)
     {
         <div style="float:left;">
+            <h6 class="text-dark" style="float:left;">Mes&nbsp;</h6>
             <select name="months" id="months" onchange="ChangeSelectedMonth()" style="float: left;">
                 <option value=""></option>
                 @foreach (var i in Model.monthsOfRegisters)
